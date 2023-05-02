@@ -1,3 +1,4 @@
+import { DigitFactoryWithBase } from "../digit-factory/digit-factory-with-base";
 import { insertRadix } from "../formatting";
 import { DigitsOptions, PAdicInterface } from "../types";
 
@@ -6,6 +7,7 @@ export const MAX_DIGITS = 100;
 export class PAdicAbstract implements PAdicInterface {
     readonly type = "padic";
     readonly subType = "abstract";
+    shift = 0;
     base = 10;
     valuation(): number {
         throw new Error("valuation function must be implemented by subclass");
@@ -37,5 +39,18 @@ export class PAdicAbstract implements PAdicInterface {
 
         // If the number is all zeros, then we should return the string "0" instead of blank.
         return ret || "0";
+    }
+    _rawAt(pos: number): number {
+        if (pos < 0) {
+            return 0;
+        }
+        const valuation = this.valuation();
+        return this.numericDigitAt(pos + valuation);
+    }
+    at(pos: number): number {
+        return this._rawAt(pos - this.shift);
+    }
+    initialDigits(len: number) {
+        return Array.from({ length: len }).map((_, i) => this.at(i));
     }
 }

@@ -11,7 +11,7 @@ export class DigitFactoryPrimitive
         super();
         this.#digits = digits;
     }
-    at(pos: number) {
+    _rawAt(pos: number) {
         return this.#digits[pos] || 0;
     }
 }

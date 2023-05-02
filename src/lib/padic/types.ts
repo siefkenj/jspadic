@@ -8,7 +8,7 @@ export interface PAdicBasic {
 
 export type DigitsOptions = { pad?: boolean };
 
-export interface PAdicInterface {
+export interface PAdicInterface extends BasedDigitFactory {
     type: "padic";
     subType: "primitive" | "abstract";
     base: number;
@@ -19,9 +19,9 @@ export interface PAdicInterface {
 }
 
 export interface DigitFactory {
-    type: "digit-factory";
+    shift: number;
     at: (pos: number) => number;
-    digits: (len: number) => number[];
+    initialDigits: (len: number) => number[];
 }
 
 export interface BasedDigitFactory extends DigitFactory {

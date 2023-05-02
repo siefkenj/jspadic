@@ -16,13 +16,13 @@ export class DigitFactoryProd
         this.#right = right;
     }
 
-    at(pos: number) {
+    _rawAt(pos: number) {
         if (this.#cache[pos] !== undefined) {
             return this.#cache[pos];
         }
         const ret = reverseDotProd(
-            this.#left.digits(pos + 1),
-            this.#right.digits(pos + 1)
+            this.#left.initialDigits(pos + 1),
+            this.#right.initialDigits(pos + 1)
         );
         this.#cache[pos] = ret;
         return ret;

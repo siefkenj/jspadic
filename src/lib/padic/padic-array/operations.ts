@@ -1,53 +1,64 @@
 import { DigitFactory } from "../types";
-import { DigitFactoryPrimitive } from "./digit-factory-primitive";
-import { DigitFactoryProd } from "./digit-factory-prod";
-import { enumerateWords } from "./digit-factory-solve";
-import { DigitFactorySum } from "./digit-factory-sum";
-import { DigitFactoryWithBase } from "./digit-factory-with-base";
+import { PAdicArrayPrimitive } from "./padic-array-primitive";
+import { PAdicArrayProd } from "./padic-array-prod";
+import { PAdicArraySum } from "./padic-array-sum";
+import { PAdicArrayInterface } from "./types";
+import { enumerateWords } from "./utils";
 
 /**
- * Compute the sum of two `DigitFactory` objects.
+ * Compute the sum of two `PAdicInterface` objects.
  */
 export function sum(
-    a: DigitFactoryWithBase,
-    b: DigitFactoryWithBase
-): DigitFactoryWithBase {
-    if (a.base !== b.base) {
-        throw new Error(`Cannot add items with different bases`);
+    a: PAdicArrayInterface,
+    b: PAdicArrayInterface
+): PAdicArrayInterface {
+    const ret = new PAdicArraySum(a, b);
+    if (a.base && a.base === b.base) {
+        ret.setBase(a.base);
     }
-    return new DigitFactoryWithBase(a.base, new DigitFactorySum(a, b));
+    return ret;
 }
 
 /**
- * Compute the product of two `DigitFactory` objects.
+ * Compute the product of two `PAdicInterface` objects.
  */
 export function prod(
-    a: DigitFactoryWithBase,
-    b: DigitFactoryWithBase
-): DigitFactoryWithBase {
-    if (a.base !== b.base) {
-        throw new Error(`Cannot add items with different bases`);
+    a: PAdicArrayInterface,
+    b: PAdicArrayInterface
+): PAdicArrayInterface {
+    const ret = new PAdicArrayProd(a, b);
+    if (a.base && a.base === b.base) {
+        ret.setBase(a.base);
     }
-    return new DigitFactoryWithBase(a.base, new DigitFactoryProd(a, b));
+    return ret;
 }
 
 /**
- * Compute the difference of two `DigitFactory` objects.
+ * Compute the difference of two `PAdicInterface` objects.
  */
 export function diff(
-    a: DigitFactoryWithBase,
-    b: DigitFactoryWithBase
-): DigitFactoryWithBase {
-    if (a.base !== b.base) {
-        throw new Error(`Cannot add items with different bases`);
-    }
-    return new DigitFactoryWithBase(
-        a.base,
-        new DigitFactorySum(
-            a,
-            new DigitFactoryProd(b, new DigitFactoryPrimitive([-1]))
-        )
+    a: PAdicArrayInterface,
+    b: PAdicArrayInterface
+): PAdicArrayInterface {
+    const ret = new PAdicArraySum(
+        a,
+        new PAdicArrayProd(b, new PAdicArrayPrimitive([-1]))
     );
+    if (a.base && a.base === b.base) {
+        ret.setBase(a.base);
+    }
+    return ret;
+}
+
+/**
+ * Negate a `PAdicInterface` object.
+ */
+export function negate(a: PAdicArrayInterface): PAdicArrayInterface {
+    const ret = new PAdicArrayProd(a, new PAdicArrayPrimitive([-1]));
+    if (a.base) {
+        ret.setBase(a.base);
+    }
+    return ret;
 }
 
 /**
@@ -55,7 +66,7 @@ export function diff(
  */
 export function solve(
     base: number,
-    formula: (a: DigitFactoryWithBase) => DigitFactory,
+    formula: (a: PAdicArrayInterface) => PAdicArrayInterface,
     MAX_SEARCH_DIGITS = 1
 ) {
     let possibleSolutions: number[][] = [[]];
@@ -70,15 +81,12 @@ export function solve(
             for (const newDigits of enumerateWords(MAX_SEARCH_DIGITS, base)) {
                 const digitsGuess = knownDigits.concat(newDigits);
                 const resultingNum = formula(
-                    new DigitFactoryWithBase(
-                        base,
-                        new DigitFactoryPrimitive(digitsGuess)
-                    )
+                    new PAdicArrayPrimitive(digitsGuess).setBase(base)
                 );
 
                 // All the digits up to and including the newest digit should
                 // be zero.
-                if (isZero(resultingNum.initialDigits(knownDigits.length + 1))) {
+                if (isZero(resultingNum.digits(knownDigits.length + 1))) {
                     possibleExtensions.add(newDigits[0]);
                 }
             }

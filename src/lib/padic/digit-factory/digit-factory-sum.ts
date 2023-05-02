@@ -13,7 +13,7 @@ export class DigitFactorySum
         this.#left = left;
         this.#right = right;
     }
-    at(pos: number) {
+    _rawAt(pos: number) {
         return this.#left.at(pos) + this.#right.at(pos);
     }
 }

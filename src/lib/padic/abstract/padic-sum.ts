@@ -1,5 +1,7 @@
+import { DigitFactorySum } from "../digit-factory/digit-factory-sum";
+import { DigitFactoryWithBase } from "../digit-factory/digit-factory-with-base";
 import { ensureCompatible } from "../primitive/padic-primitive";
-import { PAdicInterface } from "../types";
+import { BasedDigitFactory, PAdicInterface } from "../types";
 import { MAX_DIGITS, PAdicAbstract } from "./padic";
 
 export class PAdicSum extends PAdicAbstract implements PAdicInterface {
@@ -8,9 +10,17 @@ export class PAdicSum extends PAdicAbstract implements PAdicInterface {
     #digitsCache: number[] = [];
     #valuation: number = 0;
     #lastCarry: number = 0;
+    #digitFactory: BasedDigitFactory;
     constructor(left: PAdicInterface, right: PAdicInterface) {
         ensureCompatible(left, right);
         super();
+        this.#digitFactory = new DigitFactoryWithBase(
+            left.base,
+            new DigitFactorySum(left, right)
+        );
+        const leftValuation = left.valuation();
+        const rightValuation = right.valuation();
+
         this.#left = left;
         this.#right = right;
         this.base = this.#left.base;

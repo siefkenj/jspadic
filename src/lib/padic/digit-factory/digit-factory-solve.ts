@@ -27,7 +27,7 @@ export class DigitFactorySolve
         this.#formula = formula;
     }
 
-    at(pos: number) {
+    _rawAt(pos: number) {
         if (pos < 0) {
             return 0;
         }
@@ -59,7 +59,7 @@ export class DigitFactorySolve
  
             // All the digits up to and including the newest digit should
             // be zero.
-            if (isZero(resultingNum.digits(knownDigits.length + 1))) {
+            if (isZero(resultingNum.initialDigits(knownDigits.length + 1))) {
                 this.#cache.push(newDigits[0]);
                 break;
             }

@@ -23,7 +23,7 @@ export class DigitFactoryWithBase
     get base() {
         return this.#base;
     }
-    at(pos: number) {
+    _rawAt(pos: number) {
         if (pos < 0) {
             return 0;
         }
