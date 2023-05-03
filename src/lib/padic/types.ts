@@ -6,7 +6,11 @@ export interface PAdicBasic {
     sign: 1 | -1;
 }
 
-export type DigitsOptions = { pad?: boolean };
+export type DigitsOptions = {
+    pad?: boolean;
+    includeBase?: boolean;
+    len?: number;
+};
 
 export interface PAdicInterface extends BasedDigitFactory {
     type: "padic";

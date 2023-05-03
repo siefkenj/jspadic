@@ -47,7 +47,8 @@ export class PAdicArrayAbstract implements PAdicArrayInterface {
         // we need to recompute.
         this.#abstractCache.base = this.base;
         this.#abstractCache.lowestPower = this.lowestPower;
-        let pos = this.lowestPower;
+        // Make sure `pos` is an integer so that we don't get `-0` as a valuation.
+        let pos = this.lowestPower | 0;
         while (pos < MAX_DIGITS && this.digit(pos) === 0) {
             pos++;
         }
@@ -58,8 +59,18 @@ export class PAdicArrayAbstract implements PAdicArrayInterface {
         this.#abstractCache.valuation = ret;
         return ret;
     }
-    toString(len: number = 10, options?: DigitsOptions): string {
-        const { pad = false } = options || {};
+    toString(
+        _len: number | DigitsOptions = 10,
+        options?: DigitsOptions
+    ): string {
+        let {
+            pad = false,
+            len = _len,
+            includeBase = false,
+        } = typeof _len === "object" ? _len : options || {};
+        if (typeof len !== "number") {
+            len = 10;
+        }
         const valuation = this.valuation();
         const radix = valuation < 0 ? -valuation : 0;
         // We return everything to the right of the radix
@@ -76,6 +87,13 @@ export class PAdicArrayAbstract implements PAdicArrayInterface {
         }
 
         // If the number is all zeros, then we should return the string "0" instead of blank.
-        return ret || "0";
+        ret = ret || "0";
+        if (includeBase) {
+            ret += `_${this.base || 10}`;
+        }
+        if (ret.startsWith(".")) {
+            ret = "0" + ret;
+        }
+        return ret;
     }
 }

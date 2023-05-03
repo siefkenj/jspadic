@@ -8,6 +8,6 @@ export interface PAdicArrayInterface {
     digits: (len: number) => number[];
     setBase: (base: number) => PAdicArrayInterface & { base: number };
     valuation: () => number;
-    toString(len?: number, options?: DigitsOptions): string;
+    toString(len?: number | DigitsOptions, options?: DigitsOptions): string;
     clone(): PAdicArrayInterface;
 }
