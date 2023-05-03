@@ -1,5 +1,5 @@
 import { bigIntToArray, normalizeArrayRepr, stringToArray } from "./array-repr";
-import { PAdicBasic } from "../../types";
+import { PAdicBasic } from "../types";
 
 function newPAdicBasic(base?: number): PAdicBasic {
     return { type: "padic", base: base || 10, radix: 0, repr: [], sign: 1 };

@@ -5,7 +5,7 @@ import {
     bigIntToArray,
     normalizeArrayRepr,
     stringToArray,
-} from "../lib/padic/primitive/parsing/array-repr";
+} from "../lib/padic/parsing/array-repr";
 
 describe("Array Representation of Numbers", () => {
     it("can convert between bigints and arrays", () => {

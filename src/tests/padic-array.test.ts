@@ -3,8 +3,8 @@ import { diff, prod, solve, sum } from "../lib/padic/padic-array/operations";
 import { PAdicArrayPrimitive } from "../lib/padic/padic-array/padic-array-primitive";
 import { PAdicArrayProd } from "../lib/padic/padic-array/padic-array-prod";
 import { PAdicArraySum } from "../lib/padic/padic-array/padic-array-sum";
-import { PAdicArrayInterface } from "../lib/padic/padic-array/types";
 import { enumerateWords } from "../lib/padic/padic-array/utils";
+import { PAdicArrayInterface } from "../lib/padic/types";
 
 describe("PAdicArray tests", () => {
     it("PAdicArrayPrimitive", () => {
@@ -210,11 +210,4 @@ describe("PAdicArray tests", () => {
         a.lowestPower = 2;
         expect(a.valuation()).toEqual(3);
     });
-    //    it("can apply shift", () => {
-    //        let f: PAdicArrayPrimitive;
-    //
-    //        f = new PAdicArrayPrimitive([1, 2]);
-    //        f.shift = 2;
-    //        expect(f.initialDigits(5)).toEqual([0, 0, 1, 2, 0]);
-    //    });
 });

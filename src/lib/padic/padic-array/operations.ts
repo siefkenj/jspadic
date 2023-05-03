@@ -1,8 +1,7 @@
-import { DigitFactory } from "../types";
+import { PAdicArrayInterface } from "../types";
 import { PAdicArrayPrimitive } from "./padic-array-primitive";
 import { PAdicArrayProd } from "./padic-array-prod";
 import { PAdicArraySum } from "./padic-array-sum";
-import { PAdicArrayInterface } from "./types";
 import { enumerateWords } from "./utils";
 
 /**

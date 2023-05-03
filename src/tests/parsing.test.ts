@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { parseToPadicBasic } from "../lib/padic/primitive/parsing/padic-basic";
+import { parseToPadicBasic } from "../lib/padic/parsing/padic-basic";
 
-describe("PAdic class", () => {
+describe("Parsing", () => {
     it("can parse from string", () => {
         expect(parseToPadicBasic("123")).toEqual({
             type: "padic",

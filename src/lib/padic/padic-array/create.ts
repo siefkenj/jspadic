@@ -1,7 +1,7 @@
-import { parseToPadicBasic } from "../primitive/parsing/padic-basic";
+import { parseToPadicBasic } from "../parsing/padic-basic";
 import { prod } from "./operations";
 import { PAdicArrayPrimitive } from "./padic-array-primitive";
-import { PAdicArrayInterface } from "./types";
+import { PAdicArrayInterface } from "../types";
 
 /**
  * Create a PAdicArray object out of a string/number/etc.

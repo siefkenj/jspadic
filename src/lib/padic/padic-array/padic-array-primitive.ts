@@ -1,6 +1,6 @@
 import { PAdicArrayAbstract } from "./padic-array-abstract";
 import { EnsureBase } from "./base";
-import { PAdicArrayInterface } from "./types";
+import { PAdicArrayInterface } from "../types";
 
 export class PAdicArrayPrimitive
     extends PAdicArrayAbstract

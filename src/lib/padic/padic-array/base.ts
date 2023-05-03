@@ -1,5 +1,5 @@
 import { PAdicArrayPrimitive } from "./padic-array-primitive";
-import { PAdicArrayInterface } from "./types";
+import { PAdicArrayInterface } from "../types";
 
 export class EnsureBase {
     base: number = 10;

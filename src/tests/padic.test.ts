@@ -2,8 +2,8 @@ import { describe, it, expect } from "vitest";
 import { createPAdicArray } from "../lib/padic/padic-array/create";
 import { prod, sum } from "../lib/padic/padic-array/operations";
 import { PAdicArrayPrimitive } from "../lib/padic/padic-array/padic-array-primitive";
-import { PAdicArrayInterface } from "../lib/padic/padic-array/types";
-import { extractNumberParts } from "../lib/padic/primitive/parsing/padic-basic";
+import { extractNumberParts } from "../lib/padic/parsing/padic-basic";
+import { PAdicArrayInterface } from "../lib/padic/types";
 
 describe("PAdic class", () => {
     it("can extract number info from string", () => {

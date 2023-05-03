@@ -1,6 +1,5 @@
 import { insertRadix } from "../formatting";
-import { DigitsOptions } from "../types";
-import { PAdicArrayInterface } from "./types";
+import { DigitsOptions, PAdicArrayInterface } from "../types";
 
 export const MAX_DIGITS = 100;
 
