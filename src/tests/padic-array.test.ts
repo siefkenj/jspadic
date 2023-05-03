@@ -7,7 +7,7 @@ import { PAdicArrayInterface } from "../lib/padic/padic-array/types";
 import { enumerateWords } from "../lib/padic/padic-array/utils";
 
 describe("PAdicArray tests", () => {
-    it("DigitFactoryPrimitive", () => {
+    it("PAdicArrayPrimitive", () => {
         let f: PAdicArrayPrimitive;
 
         f = new PAdicArrayPrimitive([]);
@@ -19,14 +19,14 @@ describe("PAdicArray tests", () => {
         f = new PAdicArrayPrimitive([0, 1, 2, 3, 4, 5, 6]);
         expect(f.digits(5)).toEqual([0, 1, 2, 3, 4]);
     });
-    it("DigitFactoryPrimitive can set lowest power", () => {
+    it("PAdicArrayPrimitive can set lowest power", () => {
         let f: PAdicArrayPrimitive;
 
         f = new PAdicArrayPrimitive([1, 2]);
         f.lowestPower = 2;
         expect(f.digits(5)).toEqual([0, 0, 1, 2, 0]);
     });
-    it("DigitFactoryPrimitive can set base", () => {
+    it("PAdicArrayPrimitive can set base", () => {
         let f: PAdicArrayPrimitive;
 
         f = new PAdicArrayPrimitive([3, 2]);
@@ -42,7 +42,7 @@ describe("PAdicArray tests", () => {
         f.lowestPower = 2;
         expect(f.digits(5)).toEqual([0, 0, 0, 5, 2]);
     });
-    it("DigitFactorySum", () => {
+    it("PAdicArraySum", () => {
         let a: PAdicArrayPrimitive;
         let b: PAdicArrayPrimitive;
 
@@ -58,7 +58,7 @@ describe("PAdicArray tests", () => {
         b = new PAdicArrayPrimitive([1, 2, 3]);
         expect(new PAdicArraySum(a, b).digits(5)).toEqual([8, 3, 7, 5, 0]);
     });
-    it("DigitFactorySum can set base", () => {
+    it("PAdicArraySum can set base", () => {
         let a: PAdicArrayPrimitive;
         let b: PAdicArrayPrimitive;
 
@@ -70,7 +70,7 @@ describe("PAdicArray tests", () => {
         sum.lowestPower = 2;
         expect(sum.digits(5)).toEqual([0, 0, 6, 1, 0]);
     });
-    it("DigitFactoryProd", () => {
+    it("PAdicArrayProd", () => {
         let a: PAdicArrayPrimitive;
         let b: PAdicArrayPrimitive;
 
@@ -86,7 +86,7 @@ describe("PAdicArray tests", () => {
         b = new PAdicArrayPrimitive([1, 2, 3]);
         expect(new PAdicArrayProd(a, b).digits(5)).toEqual([7, 15, 27, 16, 22]);
     });
-    it("DigitFactoryProd can set base", () => {
+    it("PAdicArrayProd can set base", () => {
         let a: PAdicArrayPrimitive;
         let b: PAdicArrayPrimitive;
 
@@ -117,7 +117,7 @@ describe("PAdicArray tests", () => {
             7, 5, 8, 8, 3, 7, 1, 0, 0, 0,
         ]);
     });
-    it("DigitFactoryWithBase works with negative values", () => {
+    it("PAdicArrayWithBase works with negative values", () => {
         let a: PAdicArrayPrimitive;
 
         a = new PAdicArrayPrimitive([-1, 0, 0]);
