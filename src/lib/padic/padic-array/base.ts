@@ -1,14 +1,14 @@
-import { PAdicArrayPrimitive } from "./padic-array-primitive";
-import { PAdicArrayInterface } from "../types";
+import { PAdicPrimitive } from "./padic-array-primitive";
+import { PAdicInterface } from "../types";
 
 export class EnsureBase {
     base: number = 10;
-    #digits: PAdicArrayInterface;
+    #digits: PAdicInterface;
     #cache: number[] = [];
     #carry: number = 0;
-    constructor(base: number, digits: number[] | PAdicArrayInterface = []) {
+    constructor(base: number, digits: number[] | PAdicInterface = []) {
         this.#digits = Array.isArray(digits)
-            ? new PAdicArrayPrimitive(digits)
+            ? new PAdicPrimitive(digits)
             : digits;
         this.base = base;
     }

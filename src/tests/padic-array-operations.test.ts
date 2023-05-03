@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest";
 import { createPAdicArray } from "../lib/padic/padic-array/create";
 import { negate, prod, sum } from "../lib/padic/padic-array/operations";
-import { PAdicArrayInterface } from "../lib/padic/padic-array/types";
+import { PAdicInterface } from "../lib/padic/types";
 
 describe("PAdic abstract operations", () => {
     it("can compute sum from abstract padic objects", () => {
-        let theSum: PAdicArrayInterface;
+        let theSum: PAdicInterface;
         theSum = sum(createPAdicArray("10"), createPAdicArray("20"));
         expect(theSum.valuation()).toEqual(1);
         expect(theSum.toString(5)).toEqual("30");
@@ -26,7 +26,7 @@ describe("PAdic abstract operations", () => {
         expect(theSum.toString(5)).toEqual("0");
     });
     it("can compute negation from abstract padic objects", () => {
-        let neg: PAdicArrayInterface;
+        let neg: PAdicInterface;
         neg = negate(createPAdicArray("30"));
         expect(neg.toString(5)).toEqual("99970");
 
@@ -40,7 +40,7 @@ describe("PAdic abstract operations", () => {
         expect(neg.toString(5)).toEqual("0");
     });
     it("can subtract by adding a negative", () => {
-        let diff: PAdicArrayInterface;
+        let diff: PAdicInterface;
         diff = sum(createPAdicArray("12345"), negate(createPAdicArray("45")));
         expect(diff.toString(10)).toEqual("12300");
 
@@ -54,7 +54,7 @@ describe("PAdic abstract operations", () => {
         expect(diff.toString(10)).toEqual("45");
     });
     it("can multiply", () => {
-        let theProd: PAdicArrayInterface;
+        let theProd: PAdicInterface;
         theProd = prod(createPAdicArray("12.3"), createPAdicArray("2"));
         expect(theProd.toString(10)).toEqual("24.6");
 

@@ -1,16 +1,16 @@
-import { PAdicArrayAbstract } from "./padic-array-abstract";
+import { PAdicAbstract } from "./padic-array-abstract";
 import { EnsureBase } from "./base";
-import { PAdicArrayInterface } from "../types";
+import { PAdicInterface } from "../types";
 
-export class PAdicArraySum
-    extends PAdicArrayAbstract
-    implements PAdicArrayInterface
+export class PAdicSum
+    extends PAdicAbstract
+    implements PAdicInterface
 {
-    #left: PAdicArrayInterface;
-    #right: PAdicArrayInterface;
+    #left: PAdicInterface;
+    #right: PAdicInterface;
     #sum: _PAdicArraySum;
     #withBase?: EnsureBase;
-    constructor(left: PAdicArrayInterface, right: PAdicArrayInterface) {
+    constructor(left: PAdicInterface, right: PAdicInterface) {
         super();
         this.#left = left;
         this.#right = right;
@@ -32,13 +32,13 @@ export class PAdicArraySum
         }
         return this.#sum.digit(pos);
     }
-    setBase(base: number): PAdicArrayAbstract & { base: number } {
+    setBase(base: number): PAdicAbstract & { base: number } {
         this.base = base;
         this.#withBase = new EnsureBase(this.base, this.#sum);
         return this as any;
     }
     clone() {
-        const ret = new PAdicArraySum(this.#left, this.#right);
+        const ret = new PAdicSum(this.#left, this.#right);
         ret.lowestPower = this.lowestPower;
         if (this.base) {
             ret.setBase(this.base);
@@ -47,10 +47,10 @@ export class PAdicArraySum
     }
 }
 
-class _PAdicArraySum extends PAdicArrayAbstract implements PAdicArrayInterface {
-    #left: PAdicArrayInterface;
-    #right: PAdicArrayInterface;
-    constructor(left: PAdicArrayInterface, right: PAdicArrayInterface) {
+class _PAdicArraySum extends PAdicAbstract implements PAdicInterface {
+    #left: PAdicInterface;
+    #right: PAdicInterface;
+    constructor(left: PAdicInterface, right: PAdicInterface) {
         super();
         this.#left = left;
         this.#right = right;

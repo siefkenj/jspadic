@@ -1,17 +1,17 @@
-import { PAdicArrayInterface } from "../types";
-import { PAdicArrayPrimitive } from "./padic-array-primitive";
-import { PAdicArrayProd } from "./padic-array-prod";
-import { PAdicArraySum } from "./padic-array-sum";
+import { PAdicInterface } from "../types";
+import { PAdicPrimitive } from "./padic-array-primitive";
+import { PAdicProd } from "./padic-array-prod";
+import { PAdicSum } from "./padic-array-sum";
 import { enumerateWords } from "./utils";
 
 /**
  * Compute the sum of two `PAdicInterface` objects.
  */
 export function sum(
-    a: PAdicArrayInterface,
-    b: PAdicArrayInterface
-): PAdicArrayInterface {
-    const ret = new PAdicArraySum(a, b);
+    a: PAdicInterface,
+    b: PAdicInterface
+): PAdicInterface {
+    const ret = new PAdicSum(a, b);
     if (a.base && a.base === b.base) {
         ret.setBase(a.base);
     }
@@ -22,10 +22,10 @@ export function sum(
  * Compute the product of two `PAdicInterface` objects.
  */
 export function prod(
-    a: PAdicArrayInterface,
-    b: PAdicArrayInterface
-): PAdicArrayInterface {
-    const ret = new PAdicArrayProd(a, b);
+    a: PAdicInterface,
+    b: PAdicInterface
+): PAdicInterface {
+    const ret = new PAdicProd(a, b);
     if (a.base && a.base === b.base) {
         ret.setBase(a.base);
     }
@@ -36,12 +36,12 @@ export function prod(
  * Compute the difference of two `PAdicInterface` objects.
  */
 export function diff(
-    a: PAdicArrayInterface,
-    b: PAdicArrayInterface
-): PAdicArrayInterface {
-    const ret = new PAdicArraySum(
+    a: PAdicInterface,
+    b: PAdicInterface
+): PAdicInterface {
+    const ret = new PAdicSum(
         a,
-        new PAdicArrayProd(b, new PAdicArrayPrimitive([-1]))
+        new PAdicProd(b, new PAdicPrimitive([-1]))
     );
     if (a.base && a.base === b.base) {
         ret.setBase(a.base);
@@ -52,8 +52,8 @@ export function diff(
 /**
  * Negate a `PAdicInterface` object.
  */
-export function negate(a: PAdicArrayInterface): PAdicArrayInterface {
-    const ret = new PAdicArrayProd(a, new PAdicArrayPrimitive([-1]));
+export function negate(a: PAdicInterface): PAdicInterface {
+    const ret = new PAdicProd(a, new PAdicPrimitive([-1]));
     if (a.base) {
         ret.setBase(a.base);
     }
@@ -65,7 +65,7 @@ export function negate(a: PAdicArrayInterface): PAdicArrayInterface {
  */
 export function solve(
     base: number,
-    formula: (a: PAdicArrayInterface) => PAdicArrayInterface,
+    formula: (a: PAdicInterface) => PAdicInterface,
     MAX_SEARCH_DIGITS = 1
 ) {
     let possibleSolutions: number[][] = [[]];
@@ -80,7 +80,7 @@ export function solve(
             for (const newDigits of enumerateWords(MAX_SEARCH_DIGITS, base)) {
                 const digitsGuess = knownDigits.concat(newDigits);
                 const resultingNum = formula(
-                    new PAdicArrayPrimitive(digitsGuess).setBase(base)
+                    new PAdicPrimitive(digitsGuess).setBase(base)
                 );
 
                 // All the digits up to and including the newest digit should

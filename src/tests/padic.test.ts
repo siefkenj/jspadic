@@ -1,9 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { createPAdicArray } from "../lib/padic/padic-array/create";
 import { prod, sum } from "../lib/padic/padic-array/operations";
-import { PAdicArrayPrimitive } from "../lib/padic/padic-array/padic-array-primitive";
 import { extractNumberParts } from "../lib/padic/parsing/padic-basic";
-import { PAdicArrayInterface } from "../lib/padic/types";
+import { PAdicInterface } from "../lib/padic/types";
 
 describe("PAdic class", () => {
     it("can extract number info from string", () => {
@@ -70,7 +69,7 @@ describe("PAdic class", () => {
         });
     });
     it("can initialize", () => {
-        let x: PAdicArrayInterface;
+        let x: PAdicInterface;
 
         x = createPAdicArray(123, 10);
         expect(x.toString({ includeBase: true })).toBe("123_10");
@@ -115,7 +114,7 @@ describe("PAdic class", () => {
         expect(x.toString({ includeBase: true })).toBe("1111111101.01_2");
     });
     it("can show digits", () => {
-        let x: PAdicArrayInterface;
+        let x: PAdicInterface;
 
         x = createPAdicArray(123, 10);
         expect(x.toString()).toBe("123");
@@ -133,7 +132,7 @@ describe("PAdic class", () => {
         expect(x.toString(8)).toBe("11110101");
     });
     it("can show pick digits one by one", () => {
-        let x: PAdicArrayInterface;
+        let x: PAdicInterface;
         const seq1 = [5, 4, 3, 2, 1, 0];
         const seq2 = [5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5];
 
@@ -153,7 +152,7 @@ describe("PAdic class", () => {
         expect(x.toString(8)).toBe("11110101");
     });
     it("can compute valuation", () => {
-        let x: PAdicArrayInterface;
+        let x: PAdicInterface;
 
         x = createPAdicArray(123, 10);
         expect(x.valuation()).toBe(0);
@@ -171,7 +170,7 @@ describe("PAdic class", () => {
         expect(x.valuation()).toBe(-1);
     });
     it("can multiply", () => {
-        let x: PAdicArrayInterface;
+        let x: PAdicInterface;
 
         x = prod(createPAdicArray(123, 10), createPAdicArray(2, 10));
         expect(x.toString({ includeBase: true })).toBe("246_10");
@@ -186,7 +185,7 @@ describe("PAdic class", () => {
         expect(x.toString({ includeBase: true })).toBe("9999999753.5_10");
     });
     it("can add", () => {
-        let x: PAdicArrayInterface;
+        let x: PAdicInterface;
 
         x = sum(createPAdicArray(123, 10), createPAdicArray(2, 10));
         expect(x.toString({ includeBase: true })).toBe("125_10");

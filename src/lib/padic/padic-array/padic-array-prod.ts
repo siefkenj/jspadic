@@ -1,16 +1,16 @@
-import { PAdicArrayAbstract } from "./padic-array-abstract";
+import { PAdicAbstract } from "./padic-array-abstract";
 import { EnsureBase } from "./base";
-import { PAdicArrayInterface } from "../types";
+import { PAdicInterface } from "../types";
 
-export class PAdicArrayProd
-    extends PAdicArrayAbstract
-    implements PAdicArrayInterface
+export class PAdicProd
+    extends PAdicAbstract
+    implements PAdicInterface
 {
-    #left: PAdicArrayInterface;
-    #right: PAdicArrayInterface;
+    #left: PAdicInterface;
+    #right: PAdicInterface;
     #prod: _PAdicArrayProd;
     #withBase?: EnsureBase;
-    constructor(left: PAdicArrayInterface, right: PAdicArrayInterface) {
+    constructor(left: PAdicInterface, right: PAdicInterface) {
         super();
         this.#left = left;
         this.#right = right;
@@ -32,13 +32,13 @@ export class PAdicArrayProd
         }
         return this.#prod.digit(pos);
     }
-    setBase(base: number): PAdicArrayAbstract & { base: number } {
+    setBase(base: number): PAdicAbstract & { base: number } {
         this.base = base;
         this.#withBase = new EnsureBase(this.base, this.#prod);
         return this as any;
     }
     clone() {
-        const ret = new PAdicArrayProd(this.#left, this.#right);
+        const ret = new PAdicProd(this.#left, this.#right);
         ret.lowestPower = this.lowestPower;
         if (this.base) {
             ret.setBase(this.base);
@@ -48,13 +48,13 @@ export class PAdicArrayProd
 }
 
 class _PAdicArrayProd
-    extends PAdicArrayAbstract
-    implements PAdicArrayInterface
+    extends PAdicAbstract
+    implements PAdicInterface
 {
-    #left: PAdicArrayInterface;
-    #right: PAdicArrayInterface;
+    #left: PAdicInterface;
+    #right: PAdicInterface;
     #cache: number[] = [];
-    constructor(left: PAdicArrayInterface, right: PAdicArrayInterface) {
+    constructor(left: PAdicInterface, right: PAdicInterface) {
         super();
         this.#left = left;
         this.#right = right;
@@ -71,7 +71,7 @@ class _PAdicArrayProd
         return ret;
     }
     clone() {
-        const ret = new PAdicArrayProd(this.#left, this.#right);
+        const ret = new PAdicProd(this.#left, this.#right);
         ret.lowestPower = this.lowestPower;
         if (this.base) {
             ret.setBase(this.base);

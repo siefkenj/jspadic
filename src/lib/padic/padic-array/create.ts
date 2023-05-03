@@ -1,15 +1,15 @@
 import { parseToPadicBasic } from "../parsing/padic-basic";
 import { prod } from "./operations";
-import { PAdicArrayPrimitive } from "./padic-array-primitive";
-import { PAdicArrayInterface } from "../types";
+import { PAdicPrimitive } from "./padic-array-primitive";
+import { PAdicInterface } from "../types";
 
 /**
  * Create a PAdicArray object out of a string/number/etc.
  */
 export function createPAdicArray(
-    repr: string | bigint | number | number[] | PAdicArrayInterface,
+    repr: string | bigint | number | number[] | PAdicInterface,
     base?: number
-): PAdicArrayInterface {
+): PAdicInterface {
     if (isPAdicArrayInterface(repr)) {
         if (base) {
             return repr.setBase(base);
@@ -17,14 +17,14 @@ export function createPAdicArray(
         return repr;
     }
     const parsedRepr = parseToPadicBasic(repr, base);
-    const ret = new PAdicArrayPrimitive(parsedRepr.repr);
+    const ret = new PAdicPrimitive(parsedRepr.repr);
     ret.lowestPower = -parsedRepr.radix;
     if (parsedRepr.sign > 0) {
         return ret.setBase(parsedRepr.base);
     }
-    return prod(ret, new PAdicArrayPrimitive([-1])).setBase(parsedRepr.base);
+    return prod(ret, new PAdicPrimitive([-1])).setBase(parsedRepr.base);
 }
 
-function isPAdicArrayInterface(obj: any): obj is PAdicArrayInterface {
+function isPAdicArrayInterface(obj: any): obj is PAdicInterface {
     return typeof obj === "object" && "padic-array" in obj;
 }

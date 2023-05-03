@@ -1,10 +1,10 @@
-import { PAdicArrayAbstract } from "./padic-array-abstract";
+import { PAdicAbstract } from "./padic-array-abstract";
 import { EnsureBase } from "./base";
-import { PAdicArrayInterface } from "../types";
+import { PAdicInterface } from "../types";
 
-export class PAdicArrayPrimitive
-    extends PAdicArrayAbstract
-    implements PAdicArrayInterface
+export class PAdicPrimitive
+    extends PAdicAbstract
+    implements PAdicInterface
 {
     #digits: number[] = [];
     #withBase?: EnsureBase;
@@ -18,13 +18,13 @@ export class PAdicArrayPrimitive
         }
         return this.#digits[pos] || 0;
     }
-    setBase(base: number): PAdicArrayAbstract & { base: number } {
+    setBase(base: number): PAdicAbstract & { base: number } {
         this.base = base;
         this.#withBase = new EnsureBase(this.base, this.#digits);
         return this as any;
     }
     clone() {
-        const ret = new PAdicArrayPrimitive(this.#digits);
+        const ret = new PAdicPrimitive(this.#digits);
         ret.lowestPower = this.lowestPower;
         if (this.base) {
             ret.setBase(this.base);

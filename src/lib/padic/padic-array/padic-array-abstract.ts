@@ -1,9 +1,13 @@
 import { insertRadix } from "../formatting";
-import { DigitsOptions, PAdicArrayInterface } from "../types";
+import { DigitsOptions, PAdicInterface } from "../types";
 
 export const MAX_DIGITS = 100;
 
-export class PAdicArrayAbstract implements PAdicArrayInterface {
+/**
+ * Abstract class that all PAdic classes inherit from. Subclasses must implement
+ * `_rawAt`, `setBase`, and `clone`.
+ */
+export class PAdicAbstract implements PAdicInterface {
     readonly type = "padic-array";
     lowestPower = 0;
     base?: number;
@@ -18,22 +22,44 @@ export class PAdicArrayAbstract implements PAdicArrayInterface {
         lowestPower: undefined,
     };
 
+    /**
+     * Return the digit at the internal position `pos`. That is `pos >= 0`
+     * and no adjustments are made for the values of `this.lowestPower`.
+     */
     _rawAt(pos: number): number {
         throw new Error(`Subclasses must implement this method`);
     }
-    setBase(base: number): PAdicArrayAbstract & { base: number } {
+    /**
+     * Set the base of the padic. This function should ensure that every digit of the
+     * padic is in the range `0 <= digit < base`
+     */
+    setBase(base: number): PAdicAbstract & { base: number } {
         throw new Error(`Subclasses must implement this method`);
     }
-    clone(): PAdicArrayInterface {
+    /**
+     * Return a (possibly shallow) clone of the padic.
+     */
+    clone(): PAdicInterface {
         throw new Error(`Subclasses must implement this method`);
     }
 
+    /**
+     * Returns the coefficient of `base^power` for the padic. `power` can
+     * be negative.
+     */
     digit(power: number): number {
         return this._rawAt(power - this.lowestPower);
     }
+    /**
+     * Return `len` number of digits, starting with `power==0`.
+     */
     digits(len: number) {
         return Array.from({ length: len }).map((_, i) => this.digit(i));
     }
+    /**
+     * Return the lowest power of a non-zero digit. If the padic is 0,
+     * then `Infinity` is returned.
+     */
     valuation(): number {
         if (
             this.#abstractCache.valuation != null &&
