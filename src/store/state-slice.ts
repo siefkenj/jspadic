@@ -1,12 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { bigIntToBase } from "../lib/bigint-to-base";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { printPadicBasic } from "../lib/padic/formatting";
 import { createPAdic } from "../lib/padic/padic-array/create";
-import { PAdicPrimitive } from "../lib/padic/padic-array/padic-array-primitive";
 import { parseToPadicBasic } from "../lib/padic/parsing/padic-basic";
 import { convertBase } from "../lib/padic/utils";
-import { parseBigInt } from "../lib/parse-bigint";
-import { RootState, AppThunk } from "./store";
+import { RootState } from "./store";
 
 export interface GlobalState {
     base: number;
@@ -28,6 +25,11 @@ const initialState: GlobalState = {
     bInBaseText: "10",
 };
 
+function parseAndPrintToBase(base10Input: string, base: number): string {
+    const base10 = parseToPadicBasic(base10Input, 10);
+    return printPadicBasic(convertBase(base10, { inBase: 10, outBase: base }));
+}
+
 export const globalSlice = createSlice({
     name: "global",
     initialState,
@@ -39,7 +41,8 @@ export const globalSlice = createSlice({
                 state.base = 0;
             }
             if (state.base >= 2) {
-                state.aInBaseText = bigIntToBase(state.a, state.base);
+                state.aInBaseText = parseAndPrintToBase(state.a, state.base);
+                state.bInBaseText = parseAndPrintToBase(state.b, state.base);
             }
         },
         setAText(state, action: PayloadAction<string>) {
@@ -88,10 +91,21 @@ export const globalSlice = createSlice({
 });
 
 export const selector = {
-    a: (state: RootState) => createPAdic(state.a).setBase(state.base),
+    // Very inefficient selector, but it's fine for now...
+    a: (state: RootState) =>
+        state.base >= 2
+            ? createPAdic(parseAndPrintToBase(state.a, state.base)).setBase(
+                  state.base
+              )
+            : createPAdic(0),
     aText: (state: RootState) => state.aText,
     aInBaseText: (state: RootState) => state.aInBaseText,
-    b: (state: RootState) => BigInt(state.b),
+    b: (state: RootState) =>
+        state.base >= 2
+            ? createPAdic(parseAndPrintToBase(state.b, state.base)).setBase(
+                  state.base
+              )
+            : createPAdic(0),
     bText: (state: RootState) => state.bText,
     bInBaseText: (state: RootState) => state.bInBaseText,
     base: (state: RootState) => state.base,
