@@ -6,7 +6,7 @@ import { PAdicInterface } from "../types";
 /**
  * Create a PAdicArray object out of a string/number/etc.
  */
-export function createPAdicArray(
+export function createPAdic(
     repr: string | bigint | number | number[] | PAdicInterface,
     base?: number
 ): PAdicInterface {

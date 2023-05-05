@@ -3,7 +3,7 @@ import { diff, prod, solve, sum } from "../lib/padic/padic-array/operations";
 import { PAdicPrimitive } from "../lib/padic/padic-array/padic-array-primitive";
 import { PAdicProd } from "../lib/padic/padic-array/padic-array-prod";
 import { PAdicSum } from "../lib/padic/padic-array/padic-array-sum";
-import { enumerateWords } from "../lib/padic/padic-array/utils";
+import { enumerateWords } from "../lib/padic/utils";
 import { PAdicInterface } from "../lib/padic/types";
 
 describe("PAdicArray tests", () => {

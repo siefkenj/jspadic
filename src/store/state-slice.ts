@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { bigIntToBase } from "../lib/bigint-to-base";
+import { printPadicBasic } from "../lib/padic/formatting";
+import { createPAdic } from "../lib/padic/padic-array/create";
+import { PAdicPrimitive } from "../lib/padic/padic-array/padic-array-primitive";
+import { parseToPadicBasic } from "../lib/padic/parsing/padic-basic";
+import { convertBase } from "../lib/padic/utils";
 import { parseBigInt } from "../lib/parse-bigint";
 import { RootState, AppThunk } from "./store";
 
@@ -39,33 +44,51 @@ export const globalSlice = createSlice({
         },
         setAText(state, action: PayloadAction<string>) {
             state.aText = action.payload;
-            const a = parseBigInt(state.aText, 10);
-            state.a = String(a);
-            state.aInBaseText = bigIntToBase(a, state.base);
+            const a = parseToPadicBasic(state.aText, 10);
+            state.a = printPadicBasic(a, 10);
+            try {
+                state.aInBaseText = printPadicBasic(
+                    convertBase(a, { inBase: 10, outBase: state.base }),
+                    state.base
+                );
+            } catch {}
         },
         setAInBaseText(state, action: PayloadAction<string>) {
             state.aInBaseText = action.payload;
-            const a = parseBigInt(state.aInBaseText, state.base);
-            state.a = String(a);
-            state.aText = bigIntToBase(a, 10);
+            const a = parseToPadicBasic(state.aInBaseText, state.base);
+            try {
+                state.a = printPadicBasic(
+                    convertBase(a, { inBase: state.base, outBase: 10 })
+                );
+                state.aText = state.a;
+            } catch {}
         },
         setBText(state, action: PayloadAction<string>) {
             state.bText = action.payload;
-            const b = parseBigInt(state.bText, 10);
-            state.b = String(b);
-            state.bInBaseText = bigIntToBase(b, state.base);
+            const b = parseToPadicBasic(state.bText, 10);
+            state.b = printPadicBasic(b, 10);
+            try {
+                state.bInBaseText = printPadicBasic(
+                    convertBase(b, { inBase: 10, outBase: state.base }),
+                    state.base
+                );
+            } catch {}
         },
         setBInBaseText(state, action: PayloadAction<string>) {
             state.bInBaseText = action.payload;
-            const b = parseBigInt(state.bInBaseText, state.base);
-            state.b = String(b);
-            state.bText = bigIntToBase(b, 10);
+            const b = parseToPadicBasic(state.bInBaseText, state.base);
+            try {
+                state.b = printPadicBasic(
+                    convertBase(b, { inBase: state.base, outBase: 10 })
+                );
+                state.bText = state.b;
+            } catch {}
         },
     },
 });
 
 export const selector = {
-    a: (state: RootState) => BigInt(state.a),
+    a: (state: RootState) => createPAdic(state.a).setBase(state.base),
     aText: (state: RootState) => state.aText,
     aInBaseText: (state: RootState) => state.aInBaseText,
     b: (state: RootState) => BigInt(state.b),

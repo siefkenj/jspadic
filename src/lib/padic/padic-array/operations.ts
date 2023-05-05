@@ -2,7 +2,7 @@ import { PAdicInterface } from "../types";
 import { PAdicPrimitive } from "./padic-array-primitive";
 import { PAdicProd } from "./padic-array-prod";
 import { PAdicSum } from "./padic-array-sum";
-import { enumerateWords } from "./utils";
+import { enumerateWords } from "../utils";
 
 /**
  * Compute the sum of two `PAdicInterface` objects.

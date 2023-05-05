@@ -8,9 +8,9 @@ export function BasicInfo() {
     const a = useAppSelector(selector.a);
     const b = useAppSelector(selector.b);
     const p = useAppSelector(selector.base);
-    const va = padic.valuation(a, p);
+    const va = a.valuation();
     const vb = padic.valuation(b, p);
-    const dba = padic.dist(a,b,p);
+    const dba = 0;//padic.dist(a,b,p);
 
     return (
         <Table>
