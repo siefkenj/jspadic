@@ -2,10 +2,7 @@ import { PAdicAbstract } from "./padic-array-abstract";
 import { EnsureBase } from "./base";
 import { PAdicInterface } from "../types";
 
-export class PAdicSum
-    extends PAdicAbstract
-    implements PAdicInterface
-{
+export class PAdicSum extends PAdicAbstract implements PAdicInterface {
     #left: PAdicInterface;
     #right: PAdicInterface;
     #sum: _PAdicArraySum;
@@ -15,10 +12,8 @@ export class PAdicSum
         this.#left = left;
         this.#right = right;
 
-        if (left.lowestPower !== right.lowestPower) {
-            left = left.clone();
-            right = right.clone();
-        }
+        left = left.clone();
+        right = right.clone();
         const minLowestPower = Math.min(left.lowestPower, right.lowestPower);
         left.lowestPower -= minLowestPower;
         right.lowestPower -= minLowestPower;

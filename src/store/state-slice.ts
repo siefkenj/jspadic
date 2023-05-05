@@ -27,7 +27,10 @@ const initialState: GlobalState = {
 
 function parseAndPrintToBase(base10Input: string, base: number): string {
     const base10 = parseToPadicBasic(base10Input, 10);
-    return printPadicBasic(convertBase(base10, { inBase: 10, outBase: base }));
+    const ret = printPadicBasic(
+        convertBase(base10, { inBase: 10, outBase: base })
+    );
+    return ret;
 }
 
 export const globalSlice = createSlice({
