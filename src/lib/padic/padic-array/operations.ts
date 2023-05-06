@@ -7,10 +7,7 @@ import { enumerateWords } from "../utils";
 /**
  * Compute the sum of two `PAdicInterface` objects.
  */
-export function sum(
-    a: PAdicInterface,
-    b: PAdicInterface
-): PAdicInterface {
+export function sum(a: PAdicInterface, b: PAdicInterface): PAdicInterface {
     const ret = new PAdicSum(a, b);
     if (a.base && a.base === b.base) {
         ret.setBase(a.base);
@@ -21,10 +18,7 @@ export function sum(
 /**
  * Compute the product of two `PAdicInterface` objects.
  */
-export function prod(
-    a: PAdicInterface,
-    b: PAdicInterface
-): PAdicInterface {
+export function prod(a: PAdicInterface, b: PAdicInterface): PAdicInterface {
     const ret = new PAdicProd(a, b);
     if (a.base && a.base === b.base) {
         ret.setBase(a.base);
@@ -35,14 +29,8 @@ export function prod(
 /**
  * Compute the difference of two `PAdicInterface` objects.
  */
-export function diff(
-    a: PAdicInterface,
-    b: PAdicInterface
-): PAdicInterface {
-    const ret = new PAdicSum(
-        a,
-        new PAdicProd(b, new PAdicPrimitive([-1]))
-    );
+export function diff(a: PAdicInterface, b: PAdicInterface): PAdicInterface {
+    const ret = new PAdicSum(a, new PAdicProd(b, new PAdicPrimitive([-1])));
     if (a.base && a.base === b.base) {
         ret.setBase(a.base);
     }
@@ -66,7 +54,8 @@ export function negate(a: PAdicInterface): PAdicInterface {
 export function solve(
     base: number,
     formula: (a: PAdicInterface) => PAdicInterface,
-    MAX_SEARCH_DIGITS = 1
+    MAX_SEARCH_DIGITS = 1,
+    MAX_SOLUTIONS = 20
 ) {
     let possibleSolutions: number[][] = [[]];
     let digitsComputed = 0;
@@ -92,6 +81,10 @@ export function solve(
             for (const digit of possibleExtensions) {
                 ret.push(knownDigits.concat([digit]));
             }
+        }
+        if (ret.length > MAX_SOLUTIONS) {
+            // We don't want to use up all the computer's memory...
+            return ret.slice(MAX_SOLUTIONS);
         }
         return ret;
     }

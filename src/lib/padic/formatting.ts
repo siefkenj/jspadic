@@ -20,7 +20,7 @@ export function valuationToPrettyFraction(v: number, base: number): string {
     if (isNaN(v) || base < 2) {
         return "NaN";
     }
-    if (v === -Infinity) {
+    if (v === Infinity) {
         return "0";
     }
     if (v === 0) {
@@ -28,6 +28,12 @@ export function valuationToPrettyFraction(v: number, base: number): string {
     }
     if (v === 1) {
         return `\\frac{1}{${base}}`;
+    }
+    if (v === -1) {
+        return `${base}`
+    }
+    if (v < 0) {
+        return `${base}^{${-v}}`
     }
     return `\\frac{1}{${base}^{${v}}}`;
 }

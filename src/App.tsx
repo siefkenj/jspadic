@@ -6,11 +6,15 @@ import {
     TextInput,
     Divider,
     Tabs,
+    ScrollArea,
 } from "@mantine/core";
 import { BasicInfo } from "./components/basic-info";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { actions, selector } from "./store/state-slice";
 import "katex/dist/katex.min.css";
+import { AboutPadics } from "./components/about-padics";
+import { InlineMath } from "react-katex";
+import { Calculator } from "./components/calculator";
 
 function App() {
     const base = useAppSelector(selector.base);
@@ -23,6 +27,7 @@ function App() {
     return (
         <AppShell
             padding={0}
+            mah={"100vh"}
             navbar={
                 <Navbar width={{ base: 300 }} p="xs">
                     <Navbar.Section>
@@ -96,11 +101,28 @@ function App() {
                 <Tabs.List>
                     <Tabs.Tab value="basic-info">Basic Info</Tabs.Tab>
                     <Tabs.Tab value="calculator">Calculator</Tabs.Tab>
+                    <Tabs.Tab value="about-padics">
+                        About <InlineMath>p</InlineMath>-adics
+                    </Tabs.Tab>
                 </Tabs.List>
                 <Tabs.Panel value="basic-info">
                     <Container p="sm">
                         <BasicInfo />
                     </Container>
+                </Tabs.Panel>
+                <Tabs.Panel value="calculator">
+                    <ScrollArea.Autosize>
+                        <Container p="sm">
+                            <Calculator />
+                        </Container>
+                    </ScrollArea.Autosize>
+                </Tabs.Panel>
+                <Tabs.Panel value="about-padics">
+                    <ScrollArea>
+                        <Container p="sm">
+                            <AboutPadics />
+                        </Container>
+                    </ScrollArea>
                 </Tabs.Panel>
             </Tabs>
             {/*       <Tabs color="teal" defaultValue="basic-info">
